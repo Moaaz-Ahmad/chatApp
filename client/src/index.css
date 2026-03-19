@@ -1,0 +1,79 @@
+/* ═══════════════════════════════════════════════
+   Design tokens — dark theme (default)
+   ═══════════════════════════════════════════════ */
+:root {
+  /* Backgrounds */
+  --bg:          #0f1117;
+  --surface-1:   #161b22;
+  --surface-2:   #1e2530;
+
+  /* Borders */
+  --border:      #2a3040;
+
+  /* Text */
+  --text-primary:   #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted:     #5a6474;
+
+  /* Brand */
+  --accent:        #4f8ef7;
+  --accent-hover:  #3a7ae0;
+
+  /* States */
+  --online:   #3fb950;
+  --hover:    rgba(255, 255, 255, 0.04);
+  --active-bg: rgba(79, 142, 247, 0.12);
+
+  /* Misc */
+  --avatar-bg: #2a3040;
+}
+
+/* ── Light theme ─────────────────────────────────
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg:          #f6f8fa;
+    --surface-1:   #ffffff;
+    --surface-2:   #f0f2f5;
+    --border:      #d0d7de;
+    --text-primary:   #1f2328;
+    --text-secondary: #656d76;
+    --text-muted:     #9198a1;
+    --hover:    rgba(0, 0, 0, 0.04);
+    --active-bg: rgba(79, 142, 247, 0.1);
+    --avatar-bg: #dde1e7;
+  }
+}
+─────────────────────────────────────────────── */
+
+/* ── Reset ───────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ───────────────────────────────────── */
+::-webkit-scrollbar        { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+button {
+  font-family: inherit;
+}

@@ -1,0 +1,243 @@
+/* ── Overlay ─────────────────────────────────────── */
+.cf-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(2px);
+  animation: cf-fade-in 0.15s ease;
+}
+
+@keyframes cf-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Modal shell ─────────────────────────────────── */
+.cf-modal {
+  width: 420px;
+  max-width: calc(100vw - 32px);
+  max-height: 520px;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  animation: cf-slide-up 0.18s ease;
+}
+
+@keyframes cf-slide-up {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Header ──────────────────────────────────────── */
+.cf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.cf-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.cf-close {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s, color 0.12s;
+}
+
+.cf-close:hover {
+  background: var(--hover);
+  color: var(--text-primary);
+}
+
+/* ── Search row ──────────────────────────────────── */
+.cf-search-wrap {
+  position: relative;
+  margin: 14px 16px 8px;
+  flex-shrink: 0;
+}
+
+.cf-search-icon {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.cf-search {
+  width: 100%;
+  padding: 10px 36px 10px 36px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.cf-search::placeholder {
+  color: var(--text-muted);
+}
+
+.cf-search:focus {
+  border-color: var(--accent);
+}
+
+/* Loading spinner (right side of input) */
+.cf-spinner {
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: cf-spin 0.6s linear infinite;
+}
+
+@keyframes cf-spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* ── Error ───────────────────────────────────────── */
+.cf-error {
+  font-size: 0.8rem;
+  color: #ff6b6b;
+  margin: 0 16px 6px;
+  flex-shrink: 0;
+}
+
+/* ── Results list ────────────────────────────────── */
+.cf-results {
+  list-style: none;
+  margin: 0;
+  padding: 4px 10px 8px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.cf-empty {
+  padding: 20px 10px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.cf-hint {
+  padding: 18px 0 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.cf-result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: 9px;
+  transition: background 0.1s;
+}
+
+.cf-result-item:hover {
+  background: var(--hover);
+}
+
+/* Avatar */
+.cf-result-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--avatar-bg, #2d3748);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.cf-result-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cf-result-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cf-result-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cf-result-email {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Chat button */
+.cf-chat-btn {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 7px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.cf-chat-btn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.cf-chat-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

@@ -1,0 +1,195 @@
+/* ── Full-screen backdrop ────────────────────────── */
+.auth-backdrop {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding: 24px;
+}
+
+/* ── Card ───────────────────────────────────────── */
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Logo ───────────────────────────────────────── */
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-self: center;
+}
+
+.auth-logo__name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+/* ── Tabs ───────────────────────────────────────── */
+.auth-tabs {
+  display: flex;
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 3px;
+  gap: 3px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.auth-tab--active {
+  background: var(--surface-1);
+  color: var(--text-primary);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* ── Form ───────────────────────────────────────── */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.auth-field label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.auth-optional {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.auth-field input {
+  padding: 10px 13px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.auth-field input::placeholder {
+  color: var(--text-muted);
+}
+
+.auth-field input:focus {
+  border-color: var(--accent);
+}
+
+.auth-field input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Error banner ───────────────────────────────── */
+.auth-error {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 13px;
+  border-radius: 9px;
+  background: rgba(255, 107, 107, 0.12);
+  border: 1px solid rgba(255, 107, 107, 0.35);
+  color: #ff8585;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+/* ── Submit button ──────────────────────────────── */
+.auth-submit {
+  margin-top: 4px;
+  padding: 11px;
+  border-radius: 10px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+}
+
+.auth-submit:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.auth-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading spinner inside button */
+.auth-submit__spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Footer switch link ─────────────────────────── */
+.auth-switch {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.auth-switch__btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.auth-switch__btn:hover {
+  color: var(--accent-hover);
+}

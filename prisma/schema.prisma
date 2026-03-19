@@ -1,0 +1,177 @@
+// Prisma schema for a real-time chat application
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────────
+
+enum ConversationType {
+  DIRECT  // 1-on-1
+  GROUP
+}
+
+enum MessageType {
+  TEXT
+  AUDIO
+  FILE
+  IMAGE
+}
+
+enum MessageStatus {
+  SENT
+  DELIVERED
+  READ
+}
+
+enum AttachmentType {
+  AUDIO
+  FILE
+  IMAGE
+}
+
+// ─────────────────────────────────────────────
+// User
+// ─────────────────────────────────────────────
+
+model User {
+  id          String   @id @default(cuid())
+  username    String   @unique
+  email       String   @unique
+  password    String
+  displayName String?
+  avatarUrl   String?
+  isOnline    Boolean  @default(false)
+  lastSeenAt  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Conversations this user is part of
+  memberships ConversationMember[]
+
+  // Messages sent by this user
+  messages    Message[]
+
+  // Message read receipts
+  readReceipts MessageReadReceipt[]
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────────
+// Conversation
+// ─────────────────────────────────────────────
+
+model Conversation {
+  id          String           @id @default(cuid())
+  type        ConversationType @default(DIRECT)
+  name        String?          // Only relevant for GROUP conversations
+  description String?          // Only relevant for GROUP conversations
+  avatarUrl   String?          // Group avatar
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  // Participants
+  members     ConversationMember[]
+
+  // All messages in this conversation
+  messages    Message[]
+
+  @@map("conversations")
+}
+
+// Junction table — User <-> Conversation (with metadata)
+model ConversationMember {
+  id             String    @id @default(cuid())
+  conversationId String
+  userId         String
+  isAdmin        Boolean   @default(false) // For group conversations
+  joinedAt       DateTime  @default(now())
+  leftAt         DateTime?                 // Null means still a member
+
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([conversationId, userId])
+  @@map("conversation_members")
+}
+
+// ─────────────────────────────────────────────
+// Message
+// ─────────────────────────────────────────────
+
+model Message {
+  id             String        @id @default(cuid())
+  conversationId String
+  senderId       String
+  type           MessageType   @default(TEXT)
+  content        String?       // Populated for TEXT messages; null for media-only messages
+  status         MessageStatus @default(SENT)
+  isEdited       Boolean       @default(false)
+  isDeleted      Boolean       @default(false) // Soft delete
+  replyToId      String?       // Self-relation for threaded replies
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  conversation   Conversation        @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender         User                @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  // Attachments (audio / file / image)
+  attachments    Attachment[]
+
+  // Threaded replies
+  replyTo        Message?            @relation("MessageReplies", fields: [replyToId], references: [id])
+  replies        Message[]           @relation("MessageReplies")
+
+  // Per-user read receipts
+  readReceipts   MessageReadReceipt[]
+
+  @@index([conversationId, createdAt])
+  @@map("messages")
+}
+
+// ─────────────────────────────────────────────
+// Attachment
+// ─────────────────────────────────────────────
+
+model Attachment {
+  id         String         @id @default(cuid())
+  messageId  String
+  type       AttachmentType
+  url        String         // Storage URL (e.g. S3, Cloudinary)
+  fileName   String?        // Original file name
+  fileSize   Int?           // Size in bytes
+  mimeType   String?        // e.g. "image/png", "audio/ogg", "application/pdf"
+  duration   Int?           // Duration in seconds — only for AUDIO
+  width      Int?           // Pixel width  — only for IMAGE
+  height     Int?           // Pixel height — only for IMAGE
+  createdAt  DateTime       @default(now())
+
+  message    Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@map("attachments")
+}
+
+// ─────────────────────────────────────────────
+// Message Read Receipt
+// ─────────────────────────────────────────────
+
+model MessageReadReceipt {
+  id        String   @id @default(cuid())
+  messageId String
+  userId    String
+  readAt    DateTime @default(now())
+
+  message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([messageId, userId])
+  @@map("message_read_receipts")
+}

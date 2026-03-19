@@ -1,0 +1,289 @@
+/* ── Message list container ─────────────────────── */
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.message-list__empty {
+  margin: auto;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+/* ── Loading states ─────────────────────────────── */
+.message-list__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  margin: auto;
+}
+
+.message-list__load-more-spinner {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 4px;
+}
+
+.message-list__load-more-btn {
+  display: block;
+  margin: 8px auto 4px;
+  padding: 5px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+
+.message-list__load-more-btn:hover {
+  background: var(--hover);
+  color: var(--text-primary);
+}
+
+/* Shared spinner */
+.ml-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: ml-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes ml-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Date divider ───────────────────────────────── */
+.date-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0 10px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.date-divider::before,
+.date-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Bubble row (layout) ────────────────────────── */
+.bubble-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.bubble-row--mine {
+  flex-direction: row-reverse;
+}
+
+/* ── Sender avatar (others only) ────────────────── */
+.bubble__avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--avatar-bg);
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  align-self: flex-end;
+}
+
+/* ── Wrap (name + bubble) ───────────────────────── */
+.bubble__wrap {
+  display: flex;
+  flex-direction: column;
+  max-width: 65%;
+}
+
+.bubble__sender-name {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+  padding-left: 4px;
+}
+
+/* ── Bubble box ─────────────────────────────────── */
+.bubble {
+  padding: 10px 13px;
+  border-radius: 16px;
+  word-break: break-word;
+}
+
+.bubble--mine {
+  background: var(--accent);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.bubble--theirs {
+  background: var(--surface-2);
+  color: var(--text-primary);
+  border-bottom-left-radius: 4px;
+}
+
+/* ── Bubble content ─────────────────────────────── */
+.bubble__text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.bubble__image {
+  max-width: 260px;
+  max-height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.bubble__audio {
+  width: 240px;
+  height: 36px;
+  margin-bottom: 4px;
+}
+
+.bubble__file {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: inherit;
+  text-decoration: none;
+  background: rgba(0, 0, 0, 0.12);
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+}
+
+.bubble__file:hover {
+  text-decoration: underline;
+}
+
+.bubble__file-size {
+  opacity: 0.65;
+  font-size: 0.72rem;
+}
+
+/* ── Meta (time + status) ───────────────────────── */
+.bubble__meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.bubble__time {
+  font-size: 0.67rem;
+  opacity: 0.65;
+}
+
+.bubble__status {
+  font-size: 0.67rem;
+  opacity: 0.7;
+}
+
+.bubble__status--read {
+  color: #7ee8fa;
+  opacity: 1;
+}
+
+.bubble__status--sending {
+  opacity: 0.5;
+  animation: pulse 1s infinite ease-in-out;
+}
+
+.bubble__status--failed {
+  color: #ff6b6b;
+  opacity: 1;
+  font-style: normal;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.8; }
+}
+
+/* ── Optimistic / failed bubble variants ────────── */
+.bubble--optimistic {
+  opacity: 0.75;
+}
+
+.bubble--failed {
+  background: rgba(255, 107, 107, 0.18) !important;
+  border: 1px solid rgba(255, 107, 107, 0.4);
+}
+
+.bubble__fail-label {
+  font-size: 0.7rem;
+  color: #ff6b6b;
+  margin-top: 3px;
+  padding-left: 4px;
+  cursor: pointer;
+}
+
+/* ── Typing indicator ───────────────────────────── */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 2px;
+}
+
+.typing-indicator__dots {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.typing-indicator__dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: typing-bounce 1.2s infinite ease-in-out;
+}
+
+.typing-indicator__dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator__dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing-bounce {
+  0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+  40%           { transform: scale(1);   opacity: 1;   }
+}
+
+.typing-indicator__label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+}

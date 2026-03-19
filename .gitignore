@@ -1,0 +1,32 @@
+node_modules/
+**/node_modules/
+
+# Logs
+*.log
+
+# Build outputs
+dist/
+build/
+.turbo/
+.next/
+out/
+
+# Environment secrets
+.env
+.env.*
+server/.env
+client/.env
+client/.env.*
+
+# Prisma SQLite (if used locally)
+*.db
+*.db-wal
+*.db-shm
+
+# Cursor / editor
+.cursor/
+.vscode/
+
+# Jest / coverage
+coverage/
+
