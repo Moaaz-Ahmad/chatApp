@@ -1,0 +1,16 @@
+{
+  "name": "chatapp-e2e",
+  "version": "1.0.0",
+  "description": "Playwright end-to-end tests for ChatApp",
+  "private": true,
+  "scripts": {
+    "test":        "playwright test",
+    "test:ui":     "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug":  "playwright test --debug",
+    "report":      "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.0"
+  }
+}

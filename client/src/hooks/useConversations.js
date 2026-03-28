@@ -84,7 +84,7 @@ export function useConversations(activeConvId, accessToken, currentUserId) {
         return {
           ...conv,
           lastMessage: {
-            content:   message.content ?? "📎 Attachment",
+            content:   message.content ?? "(attachment)",
             createdAt: message.createdAt,
           },
           unreadCount: isActive ? 0 : (conv.unreadCount ?? 0) + 1,

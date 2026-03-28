@@ -1,0 +1,16 @@
+{
+  "name": "chatapp-load-test",
+  "version": "1.0.0",
+  "description": "Socket.IO load test — 50 concurrent connections with presence:heartbeat",
+  "private": true,
+  "main": "socket-load-test.js",
+  "scripts": {
+    "test": "node socket-load-test.js",
+    "test:headed": "node socket-load-test.js --connections=50 --duration=60 --heartbeat=5"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "socket.io-client": "^4.8.3"
+  }
+}
