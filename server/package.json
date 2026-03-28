@@ -8,12 +8,13 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "db:generate": "prisma generate --schema ../prisma/schema.prisma",
-    "db:migrate": "prisma migrate dev --schema ../prisma/schema.prisma",
-    "db:studio": "prisma studio --schema ../prisma/schema.prisma"
+    "postinstall": "prisma generate --schema ./prisma/schema.prisma",
+    "db:generate": "prisma generate --schema ./prisma/schema.prisma",
+    "db:migrate": "prisma migrate dev --schema ./prisma/schema.prisma",
+    "db:studio": "prisma studio --schema ./prisma/schema.prisma"
   },
   "prisma": {
-    "schema": "../prisma/schema.prisma"
+    "schema": "./prisma/schema.prisma"
   },
   "dependencies": {
     "@prisma/client": "^6.5.0",
@@ -25,12 +26,12 @@
     "express": "^5.2.1",
     "ioredis": "^5.10.0",
     "jsonwebtoken": "^9.0.3",
+    "prisma": "^6.5.0",
     "socket.io": "^4.8.3"
   },
   "devDependencies": {
     "jest": "^30.3.0",
     "nodemon": "^3.1.14",
-    "prisma": "^6.5.0",
     "socket.io-client": "^4.8.3",
     "supertest": "^7.2.2"
   }

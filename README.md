@@ -65,7 +65,7 @@ Older messages can be loaded by scrolling near the top:
 
 ### Data Model (Prisma)
 
-Core entities in `prisma/schema.prisma`:
+Core entities in `server/prisma/schema.prisma`:
 
 - `User`
 - `Conversation` (DIRECT and GROUP)
@@ -108,8 +108,10 @@ From the repo root:
 
 ```bash
 cd server
-npx prisma db push
+npx prisma db push --schema ./prisma/schema.prisma
 ```
+
+(Or run `npm run db:generate` after `npm install` in `server/`; the schema path is set in `server/package.json` under `"prisma": { "schema": "./prisma/schema.prisma" }`.)
 
 ### 4) Install and run the servers
 
@@ -137,10 +139,24 @@ Then open the app at:
 
 If you set `REDIS_URL`, the server enables Redis-backed presence + typing and can support multi-instance Socket.IO.
 
+### Railway (or similar PaaS)
+
+Set the service **root directory** to `server` so `npm install` runs there. The `postinstall` script runs `prisma generate` using `server/prisma/schema.prisma`; the `prisma` CLI is a **dependency** (not only a devDependency) so it is available when `NODE_ENV=production`.
+
+In the platform **Variables** UI, define at least:
+
+- `DATABASE_URL` – PostgreSQL connection string (e.g. Neon)
+- `JWT_ACCESS_SECRET` – long random secret for access tokens
+- `JWT_REFRESH_SECRET` – long random secret for refresh tokens
+- `CLIENT_ORIGIN` – your deployed frontend origin (e.g. `https://your-app.vercel.app`)
+
+If variables are missing, the app will fail at startup (there is no `.env` file injected in production).
+
 ## Folder Structure (High Level)
 
 ### Server
 
+- `server/prisma/schema.prisma` – Prisma schema (client generated on `npm install` / `postinstall`)
 - `server/app.js` – Express app wiring (CORS + routes)
 - `server/routes/*` – HTTP routes
 - `server/controllers/*` – business logic / Prisma calls

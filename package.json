@@ -1,5 +1,5 @@
 {
-  "dependencies": {
-    "prisma": "^7.6.0"
-  }
+  "name": "chatapp",
+  "private": true,
+  "description": "Monorepo root. Install and run Prisma from server/ (see server/package.json)."
 }
